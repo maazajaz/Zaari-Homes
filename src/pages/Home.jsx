@@ -52,13 +52,14 @@ const Home = () => {
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Hero Content */}
-          <div className="flex items-center justify-center py-12 md:py-20">
+          {/* Desktop: Side by side, Mobile: Stacked */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen py-12 lg:py-20">
+            {/* Hero Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="max-w-4xl space-y-4 md:space-y-6 text-center"
+              className="space-y-4 md:space-y-6 text-center lg:text-left order-2 lg:order-1"
             >
               {/* Badge */}
               <motion.div
@@ -76,7 +77,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-tight"
               >
                 <span className="text-gray-900">Transform</span>
                 <span className="block bg-gradient-to-r from-primary-600 via-blue-600 to-primary-700 bg-clip-text text-transparent">
@@ -91,7 +92,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto"
+                className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed"
               >
                 Experience the perfect blend of <span className="font-semibold text-primary-600">artistry and comfort</span>. 
                 Each carpet is a masterpiece designed to elevate your interior.
@@ -101,7 +102,7 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 pt-2 md:pt-4"
+                className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 md:gap-4 pt-2 md:pt-4"
               >
                 <Link
                   to="/products"
@@ -128,31 +129,30 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
-                className="flex flex-wrap justify-center gap-6 md:gap-8 pt-4 md:pt-6 border-t border-gray-200 mt-6 md:mt-8"
+                className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-8 pt-4 md:pt-6 border-t border-gray-200 mt-6 md:mt-8"
               >
-                <div className="text-center">
+                <div className="text-center lg:text-left">
                   <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">35+</div>
                   <div className="text-xs md:text-sm text-gray-600 font-medium">Years Experience</div>
                 </div>
-                <div className="text-center">
+                <div className="text-center lg:text-left">
                   <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">10k+</div>
                   <div className="text-xs md:text-sm text-gray-600 font-medium">Happy Clients</div>
                 </div>
-                <div className="text-center">
+                <div className="text-center lg:text-left">
                   <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">50+</div>
                   <div className="text-xs md:text-sm text-gray-600 font-medium">Unique Designs</div>
                 </div>
               </motion.div>
             </motion.div>
-          </div>
 
-          {/* 3D Model Showcase */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="flex items-center justify-center pb-12 md:pb-20 relative"
-          >
+            {/* 3D Model Showcase - Order 1 on mobile, Order 2 on desktop */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="flex items-center justify-center relative order-1 lg:order-2"
+            >
             {/* Floating decorative elements - hidden on mobile */}
             <motion.div
               animate={{ 
@@ -215,7 +215,8 @@ const Home = () => {
                 )}
               </div>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Scroll Indicator - hidden on mobile */}
