@@ -51,15 +51,15 @@ const Home = () => {
           <div className="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           {/* Desktop: Side by side, Mobile: Stacked */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-screen py-12 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen py-12 lg:py-20">
             {/* Hero Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-4 md:space-y-6 text-center lg:text-left order-2 lg:order-1"
+              className="space-y-4 md:space-y-6 text-center lg:text-left order-1 lg:order-1"
             >
               {/* Badge */}
               <motion.div
@@ -146,12 +146,12 @@ const Home = () => {
               </motion.div>
             </motion.div>
 
-            {/* 3D Model Showcase - Order 1 on mobile, Order 2 on desktop */}
+            {/* 3D Model Showcase - Order 2 on mobile (below content), Order 2 on desktop (right side) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="flex items-center justify-center relative order-1 lg:order-2"
+              className="flex items-center justify-center relative order-2 lg:order-2 w-full"
             >
             {/* Floating decorative elements - hidden on mobile */}
             <motion.div
@@ -164,7 +164,7 @@ const Home = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="hidden md:block absolute top-20 right-20 w-24 h-24 bg-gradient-to-br from-primary-400 to-blue-400 rounded-3xl opacity-20 blur-2xl"
+              className="hidden lg:block absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-400 to-blue-400 rounded-3xl opacity-20 blur-2xl"
             />
             <motion.div
               animate={{ 
@@ -177,14 +177,14 @@ const Home = () => {
                 ease: "easeInOut",
                 delay: 1
               }}
-              className="hidden md:block absolute bottom-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-400 to-primary-400 rounded-full opacity-20 blur-3xl"
+              className="hidden lg:block absolute -bottom-10 -left-10 w-40 h-40 bg-gradient-to-br from-blue-400 to-primary-400 rounded-full opacity-20 blur-3xl"
             />
 
-            <div className="w-full max-w-4xl aspect-video md:aspect-[16/10] relative">
+            <div className="w-full h-[400px] sm:h-[500px] lg:h-[650px] xl:h-[700px] relative">
               {/* Glowing border effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-blue-500 to-primary-500 rounded-2xl md:rounded-3xl blur-xl md:blur-2xl opacity-40 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-blue-500 to-primary-500 rounded-2xl lg:rounded-3xl blur-xl lg:blur-2xl opacity-40 animate-pulse"></div>
               
-              <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-white via-gray-50 to-white border-2 border-white/50 h-full flex items-center justify-center backdrop-blur-sm">
+              <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-white via-gray-50 to-white border-2 border-white/50 h-full flex items-center justify-center backdrop-blur-sm">
                 {showScene ? (
                   <>
                     <CarpetScene autoRotate={true} />
@@ -194,9 +194,9 @@ const Home = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 2 }}
-                      className="absolute bottom-3 sm:bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 bg-black/80 text-white px-3 py-2 md:px-5 md:py-3 rounded-full text-xs sm:text-sm backdrop-blur-md flex items-center gap-2 shadow-lg"
+                      className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-4 py-2.5 lg:px-6 lg:py-3 rounded-full text-xs sm:text-sm backdrop-blur-md flex items-center gap-2 shadow-lg"
                     >
-                      <svg className="w-3 h-3 md:w-4 md:h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                       <span className="font-medium hidden sm:inline">Drag to rotate • Scroll to zoom</span>
