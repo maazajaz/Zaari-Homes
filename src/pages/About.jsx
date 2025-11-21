@@ -57,6 +57,18 @@ const About = () => {
         </div>
       </section>
 
+      {/* Quote */}
+      <section className="pb-12 -mt-4">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-8 shadow-2xl">
+            <p className="text-lg leading-relaxed mb-4">
+              “Zaari Homes is less a factory and more a slow atelier where dyes simmer, looms sing, and every motif is debated over chai.”
+            </p>
+            <p className="text-sm uppercase tracking-[0.3em] text-accent">Owner · Roaif Intekhab</p>
+          </div>
+        </div>
+      </section>
+
       {/* Our Story */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

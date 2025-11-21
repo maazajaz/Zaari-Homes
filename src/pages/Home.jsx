@@ -3,314 +3,315 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import CarpetScene from '../components/CarpetScene';
 
-// A simple spinner component using Tailwind CSS
-const Spinner = () => (
-  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+const features = [
+  {
+    icon: '💎',
+    title: 'Loom-to-Living Luxury',
+    description: 'Hand-spun silk, New Zealand wool, and signature Zaari finishing for heirloom longevity.'
+  },
+  {
+    icon: '🧭',
+    title: 'Curated Design Support',
+    description: 'Dedicated stylists co-create palettes, motifs, and sizes tailored to every interior story.'
+  },
+  {
+    icon: '🌱',
+    title: 'Earth-Friendly Dyes',
+    description: 'Low-impact dyeing, water recycling, and artisan welfare programs certified by CareCraft.'
+  },
+  {
+    icon: '⚡',
+    title: 'White-Glove Delivery',
+    description: 'Inspected, rolled, and installed by in-house experts across India and the Middle East.'
+  }
+];
+
+const brandLogos = ['Taj Palaces', 'The Oberoi', 'ITC Royal', 'JW Marriott', 'Four Seasons'];
+
+const showcaseTiles = [
+  {
+    title: 'Palatial Luxe',
+    tag: 'Persian Revival',
+    description: '24-knot silk & wool blend with hand-burnished gold threading.',
+    gradient: 'from-[#1B2D4A] to-[#0B1424]'
+  },
+  {
+    title: 'Monsoon Botanical',
+    tag: 'Modern Organic',
+    description: 'Oversized foliage rendered with ombré dye techniques.',
+    gradient: 'from-[#D5D8FF] via-[#F6F6FF] to-white'
+  },
+  {
+    title: 'Desert Mirage',
+    tag: 'Custom Hospitality',
+    description: 'Carved pile heights for luxury suites across West Asia.',
+    gradient: 'from-[#F1C27D] via-[#F9E7D1] to-white'
+  }
+];
+
+const processSteps = [
+  {
+    step: '01',
+    title: 'Material Curation',
+    description: 'We start with fiber moodboards—silk sheen, bamboo softness, or wool texture—picked for how you live.'
+  },
+  {
+    step: '02',
+    title: 'Atelier Weaving',
+    description: 'Master artisans tuft, knot, and shear with zero outsourcing so the weave density stays consistent.'
+  },
+  {
+    step: '03',
+    title: 'Finishing Ritual',
+    description: 'Hand washing, sun drying, and edge binding followed by a 42-point inspection before shipping.'
+  }
+];
+
+const testimonials = [
+  {
+    quote: 'Zaari translated our boutique hotel storyboard into a corridor of floating florals. Guests photograph the carpets more than the lobby.',
+    name: 'Rhea Malhotra',
+    role: 'Creative Director, Atelier Numa'
+  },
+  {
+    quote: 'Their design lab sent 3D renders and yarn poms in a week. The final piece sits beneath our boardroom chandelier like a private gallery.',
+    name: 'Farhan Qureshi',
+    role: 'Founder, Meridian Realty'
+  }
+];
+
+const HeroPreview = ({ showScene }) => (
+  <>
+    <div className="relative">
+      <div className="absolute -inset-1 bg-gradient-to-r from-accent via-primary-300 to-blue-400 rounded-[32px] blur-2xl opacity-70"></div>
+      <div className="relative rounded-[32px] bg-white/5 border border-white/15 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_rgba(5,14,31,0.6)]">
+        <div className="h-[420px] sm:h-[520px] lg:h-[620px]">
+          {showScene ? <CarpetScene autoRotate={true} /> : (
+            <div className="h-full flex items-center justify-center text-white/70">Loading immersive preview…</div>
+          )}
+        </div>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/70 text-white text-xs sm:text-sm px-4 py-2 rounded-full border border-white/20 backdrop-blur">
+          Drag to rotate · Scroll to zoom
+        </div>
+      </div>
+    </div>
+
+    <div className="hidden sm:flex flex-col gap-1 w-full mt-6 bg-white/90 text-slate-900 px-6 py-4 rounded-2xl shadow-lg border border-white/60">
+      <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Artisan Note</p>
+      <div className="flex flex-wrap items-center gap-4">
+        <div>
+          <p className="font-semibold">Lotus Wave Suite</p>
+          <p className="text-sm text-slate-600">Hand tufted · 240 knots · Sage patina</p>
+        </div>
+        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">Showroom Exclusive</span>
+      </div>
+    </div>
+  </>
 );
 
 const Home = () => {
-  const features = [
-    {
-      icon: '耳',
-      title: 'Premium Quality',
-      description: 'Handcrafted with the finest materials for lasting beauty'
-    },
-    {
-      icon: '笨ｨ',
-      title: 'Custom Designs',
-      description: 'Unique patterns tailored to your space and style'
-    },
-    {
-      icon: '訣',
-      title: 'Eco-Friendly',
-      description: 'Sustainable materials and ethical manufacturing'
-    },
-    {
-      icon: '囹',
-      title: 'Fast Delivery',
-      description: 'Quick shipping and professional installation'
-    }
-  ];
-
   const [showScene, setShowScene] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowScene(true);
-    }, 1300);
+    const timer = setTimeout(() => setShowScene(true), 1100);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="overflow-x-hidden">
-      {/* Hero Section with 3D Carpet */}
-      <section className="relative min-h-screen h-auto bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 py-8 md:py-0">
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-48 h-48 md:w-72 md:h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-        
-        <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
-          {/* Desktop: Side by side, Mobile: Stacked */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen py-12 lg:py-20">
-            {/* Hero Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-4 md:space-y-6 text-center lg:text-left order-1 lg:order-1"
-            >
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="inline-block"
-              >
-                <span className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-primary-100 to-blue-100 text-primary-700 rounded-full text-xs md:text-sm font-semibold tracking-wide uppercase shadow-md">
-                  ✨ Premium Quality Since 1990
-                </span>
-              </motion.div>
+    <div className="overflow-x-hidden bg-white">
+      {/* HERO */}
+      <section className="relative min-h-screen h-auto bg-[#050E1F] text-white">
+        <div className="absolute inset-0 opacity-60" style={{
+          backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 55%), radial-gradient(circle at 80% 0%, rgba(0,140,255,0.18) 0%, transparent 45%)'
+        }}></div>
+        <div className="absolute inset-0 mix-blend-screen opacity-10 noise-texture"></div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-tight"
-              >
-                <span className="text-gray-900">Transform</span>
-                <span className="block bg-gradient-to-r from-primary-600 via-blue-600 to-primary-700 bg-clip-text text-transparent">
-                  Your Space
-                </span>
-                <span className="block text-gray-800 text-2xl sm:text-3xl md:text-4xl mt-2 font-normal">
-                  with Luxury Carpets
-                </span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed"
-              >
-                Experience the perfect blend of <span className="font-semibold text-primary-600">artistry and comfort</span>. 
-                Each carpet is a masterpiece designed to elevate your interior.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 md:gap-4 pt-2 md:pt-4"
-              >
-                <Link
-                  to="/products"
-                  className="group bg-gradient-to-r from-primary-600 to-blue-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base"
-                >
-                  Explore Collection
-                  <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link
-                  to="/contact"
-                  className="border-2 border-gray-300 bg-white text-gray-800 px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:border-primary-500 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base"
-                >
-                  Get Quote
-                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                </Link>
-              </motion.div>
-
-              {/* Stats Row */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-8 pt-4 md:pt-6 border-t border-gray-200 mt-6 md:mt-8"
-              >
-                <div className="text-center lg:text-left">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">35+</div>
-                  <div className="text-xs md:text-sm text-gray-600 font-medium">Years Experience</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">10k+</div>
-                  <div className="text-xs md:text-sm text-gray-600 font-medium">Happy Clients</div>
-                </div>
-                <div className="text-center lg:text-left">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">50+</div>
-                  <div className="text-xs md:text-sm text-gray-600 font-medium">Unique Designs</div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* 3D Model Showcase - Order 2 on mobile (below content), Order 2 on desktop (right side) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="flex items-center justify-center relative order-2 lg:order-2 w-full"
-            >
-            {/* Floating decorative elements - hidden on mobile */}
-            <motion.div
-              animate={{ 
-                y: [0, -20, 0],
-                rotate: [0, 5, 0]
-              }}
-              transition={{ 
-                duration: 6, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="hidden lg:block absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-400 to-blue-400 rounded-3xl opacity-20 blur-2xl"
-            />
-            <motion.div
-              animate={{ 
-                y: [0, 20, 0],
-                rotate: [0, -5, 0]
-              }}
-              transition={{ 
-                duration: 8, 
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1
-              }}
-              className="hidden lg:block absolute -bottom-10 -left-10 w-40 h-40 bg-gradient-to-br from-blue-400 to-primary-400 rounded-full opacity-20 blur-3xl"
-            />
-
-            <div className="w-full h-[400px] sm:h-[500px] lg:h-[650px] xl:h-[700px] relative">
-              {/* Glowing border effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-blue-500 to-primary-500 rounded-2xl lg:rounded-3xl blur-xl lg:blur-2xl opacity-40 animate-pulse"></div>
-              
-              <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-white via-gray-50 to-white border-2 border-white/50 h-full flex items-center justify-center backdrop-blur-sm">
-                {showScene ? (
-                  <>
-                    <CarpetScene autoRotate={true} />
-                    
-                    {/* Interactive hint - adjusted for mobile */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 2 }}
-                      className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-4 py-2.5 lg:px-6 lg:py-3 rounded-full text-xs sm:text-sm backdrop-blur-md flex items-center gap-2 shadow-lg"
-                    >
-                      <svg className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                      <span className="font-medium hidden sm:inline">Drag to rotate • Scroll to zoom</span>
-                      <span className="font-medium sm:hidden">Drag to rotate</span>
-                    </motion.div>
-                  </>
-                ) : (
-                  <div className="text-center px-4">
-                    <div className="relative mx-auto w-16 h-16 md:w-20 md:h-20 mb-4">
-                      <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
-                      <div className="absolute inset-0 border-4 border-transparent border-t-primary-600 rounded-full animate-spin"></div>
-                    </div>
-                    <p className="text-gray-700 font-semibold text-base md:text-lg">Loading 3D Experience</p>
-                    <p className="text-gray-500 text-xs md:text-sm mt-2">Preparing your masterpiece...</p>
-                  </div>
-                )}
+        <div className="relative z-10 max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 lg:pt-10 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
+            <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="space-y-8 order-1">
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur">
+                <span className="text-sm tracking-[0.25em] text-accent uppercase">Since 1990</span>
+                <div className="h-1 w-16 bg-gradient-to-r from-accent to-primary-300 rounded-full"></div>
               </div>
-            </div>
+
+              <div>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-semibold leading-tight">
+                  Bespoke Carpets that feel like <span className="text-gradient">art underfoot</span>
+                </h1>
+                <p className="mt-6 text-lg text-white/80 max-w-2xl">
+                  From royal suites in Bhadohi to beachfront villas in Dubai, Zaari Homes weaves immersive floor stories with couture precision and contemporary calm.
+                </p>
+              </div>
+
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="block lg:hidden">
+                <div className="mt-8">
+                  <HeroPreview showScene={showScene} />
+                </div>
+              </motion.div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/products" className="group bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 shadow-2xl shadow-accent/30">
+                  Explore Collection
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <Link to="/contact" className="px-8 py-4 rounded-xl border border-white/30 text-white/90 hover:text-white hover:border-white transition">
+                  Book a Design Call
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap gap-6 border-t border-white/10 pt-6">
+                {[{ label: 'Years Handcrafting', value: '35+' }, { label: 'Luxury Projects', value: '1200+' }, { label: 'Design Studios Partnered', value: '75' }].map((stat) => (
+                  <div key={stat.label} className="min-w-[120px]">
+                    <p className="text-3xl font-display text-accent">{stat.value}</p>
+                    <p className="text-sm text-white/60">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="hidden lg:block order-2 w-full">
+              <HeroPreview showScene={showScene} />
             </motion.div>
           </div>
-        </div>
 
-        {/* Scroll Indicator - hidden on mobile */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <div className="animate-bounce">
-            <svg
-              className="w-6 h-6 text-gray-400"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+          <div className="mt-16">
+            <p className="uppercase text-xs tracking-[0.4em] text-white/60 mb-4">Trusted by interiors that host royalty</p>
+            <div className="flex flex-wrap gap-x-10 gap-y-4 text-white/70 text-sm sm:text-base">
+              {brandLogos.map((brand) => (
+                <span key={brand} className="tracking-wide">{brand}</span>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* Features Section */}
+      {/* Signature showcase */}
       <section className="py-20 bg-white relative">
-        {/* Subtle pattern background */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'
-        }}></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-              Why Choose Zaari Homes?
-            </h2>
-            <p className="text-xl text-gray-600">
-              Unmatched quality and service in every thread
-            </p>
-          </motion.div>
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-100 to-transparent pointer-events-none"></div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
+            <div>
+              <p className="text-accent font-semibold tracking-[0.3em] uppercase text-xs mb-3">Signature looks</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900">Every weave starts with a moodboard</h2>
+              <p className="mt-4 text-gray-600 max-w-2xl">
+                Layered palettes, carved pile heights, and architectural borders designed hand-in-hand with stylists and architects.
+              </p>
+            </div>
+            <Link to="/products" className="inline-flex items-center gap-2 text-primary-700 font-semibold">
+              Browse full catalogue
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="text-center p-6 sm:p-8 rounded-xl hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50 border border-gray-100"
-              >
-                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{feature.icon}</div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {showcaseTiles.map((tile, index) => (
+              <motion.div key={tile.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className={`rounded-3xl p-8 min-h-[320px] flex flex-col justify-between bg-gradient-to-br ${tile.gradient} text-slate-900 shadow-lg relative overflow-hidden`}>
+                <span className="text-xs tracking-[0.4em] uppercase text-slate-500">{tile.tag}</span>
+                <div>
+                  <h3 className="text-2xl font-display font-semibold mb-3">{tile.title}</h3>
+                  <p className="text-sm text-slate-600 max-w-sm">{tile.description}</p>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+                  <span className="h-2 w-2 rounded-full bg-accent"></span>
+                  Customizable in 3–12 weeks
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-600 to-blue-600 text-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-white rounded-full opacity-10"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white rounded-full opacity-10"></div>
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              Ready to Transform Your Space?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Get in touch with our experts for a personalized consultation
+      {/* Features */}
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-accent uppercase tracking-[0.4em] text-xs">Experience
             </p>
-            <Link
-              to="/contact"
-              className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-shadow duration-300"
-            >
-              Contact Us Today
-            </Link>
+            <h2 className="text-4xl font-display font-bold text-slate-900">Crafted to captivate and endure</h2>
           </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <motion.div key={feature.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-white/50 backdrop-blur-2xl rounded-2xl p-6 shadow-[0_20px_35px_rgba(15,23,42,0.08)] border border-white/50 hover:-translate-y-1 transition-transform">
+                <div className="text-3xl mb-4">{feature.icon}</div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">{feature.title}</h3>
+                <p className="text-sm text-slate-600">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 mb-12">
+            <div>
+              <p className="text-accent uppercase tracking-[0.3em] text-xs mb-3">Studio process</p>
+              <h2 className="text-3xl font-display font-bold text-slate-900">From yarn pom to grand reveal</h2>
+              <p className="mt-4 text-slate-600">Stay looped with weekly progress capsules, hi-res renders, and on-site installation management.</p>
+            </div>
+            <Link to="/about" className="text-primary-700 font-semibold">Meet our artisans →</Link>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {processSteps.map((step) => (
+              <div key={step.title} className="rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-lg transition">
+                <span className="text-sm font-mono text-accent">{step.step}</span>
+                <h3 className="text-xl font-semibold mt-3 mb-2">{step.title}</h3>
+                <p className="text-sm text-slate-600">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-gradient-to-br from-slate-900 to-slate-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(255,255,255,0.3) 0%, transparent 50%)' }}></div>
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10 mb-12">
+            <div>
+              <p className="uppercase tracking-[0.4em] text-xs text-accent mb-3">Loved by design leaders</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-semibold">Stories woven with our patrons</h2>
+            </div>
+            <Link to="/contact" className="text-white/80 hover:text-white">Start your project →</Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <motion.div key={testimonial.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.15 }} className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur">
+                <p className="text-lg leading-relaxed mb-6 text-white/90">“{testimonial.quote}”</p>
+                <div>
+                  <p className="font-semibold">{testimonial.name}</p>
+                  <p className="text-sm text-white/60">{testimonial.role}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-gradient-to-r from-primary-600 to-blue-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-32 -right-20 w-72 h-72 bg-white/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-display font-bold mb-4">Ready to transform your floor plan into a gallery?</h2>
+          <p className="text-lg text-white/80 mb-10">Schedule a design discovery call and receive a complimentary digital mockup tailored to your interior palette.</p>
+          <Link to="/contact" className="inline-flex items-center gap-3 bg-white text-primary-700 px-8 py-4 rounded-2xl font-semibold shadow-2xl">
+            Book Consultation
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
         </div>
       </section>
     </div>

@@ -85,6 +85,10 @@ const Contact = () => {
       {/* Contact Info Cards */}
       <section className="py-12 sm:py-16 -mt-12 sm:-mt-16 relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 rounded-2xl bg-white/90 backdrop-blur p-6 shadow-lg border border-white">
+            <p className="text-sm uppercase tracking-[0.4em] text-primary-600 mb-2">Concierge desk</p>
+            <p className="text-gray-700">Prefer WhatsApp? Message <span className="font-semibold">+91 9198430242</span> for instant fabric swatches and calendar slots.</p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {contactInfo.map((info, index) => (
               <motion.div
@@ -93,7 +97,7 @@ const Contact = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                className="bg-white/85 backdrop-blur-xl rounded-xl shadow-lg p-8 text-center hover:shadow-2xl transition-all duration-300 border border-white/60 border-t-4 border-t-accent/70"
               >
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-100 to-blue-100 text-primary-600 rounded-full mb-4">
                   {info.icon}

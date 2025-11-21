@@ -70,6 +70,21 @@ const Products = () => {
     }
   ];
 
+  const services = [
+    {
+      title: 'Palette Concierge',
+      description: 'We ship curated yarn-pom boxes and digital renders that mirror your lighting and flooring.'
+    },
+    {
+      title: 'On-Site Measuring',
+      description: 'White-glove teams map odd layouts, create cut-outs, and guide pile heights for each zone.'
+    },
+    {
+      title: 'Aftercare Program',
+      description: 'Climate-specific maintenance plans, stain-rescue kits, and annual spa treatments for your carpets.'
+    }
+  ];
+
   const filteredProducts = selectedCategory === 'all' 
     ? products 
     : products.filter(p => p.category === selectedCategory);
@@ -83,7 +98,8 @@ const Products = () => {
       </div>
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-blue-600 text-white py-12 sm:py-16 md:py-20 relative z-10">
+      <section className="bg-gradient-to-br from-slate-900 via-primary-700 to-blue-600 text-white py-12 sm:py-16 md:py-20 relative z-10 overflow-hidden">
+        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 10% 10%, rgba(255,255,255,0.3) 0%, transparent 45%)' }}></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -106,17 +122,32 @@ const Products = () => {
       {/* 3D Preview Section */}
       <section className="py-8 sm:py-12 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-gray-100 to-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl border border-gray-200">
+          <div className="bg-gradient-to-br from-gray-100 to-white rounded-3xl p-4 sm:p-6 md:p-8 shadow-[0_30px_80px_rgba(15,23,42,0.08)] border border-white relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent/30 rounded-full blur-3xl"></div>
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-center mb-4 sm:mb-6">
               Interactive 3D Preview
             </h2>
-            <div className="h-[300px] sm:h-[400px] md:h-[500px] rounded-xl overflow-hidden">
+            <div className="h-[320px] sm:h-[420px] md:h-[520px] rounded-2xl overflow-hidden border border-white/60">
               <CarpetScene autoRotate={false} />
             </div>
             <p className="text-center text-gray-600 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base">
               <span className="hidden sm:inline">Drag to rotate • Scroll to zoom • Click and drag to explore</span>
               <span className="sm:hidden">Drag to rotate and explore</span>
             </p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3 text-left text-sm text-gray-600">
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-1">Fiber mix</p>
+                <p className="font-semibold text-slate-800">Silk / New Zealand Wool</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-1">Lead time</p>
+                <p className="font-semibold text-slate-800">6 – 10 weeks</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-1">Finish</p>
+                <p className="font-semibold text-slate-800">Hand Sheared Luxe</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -153,10 +184,10 @@ const Products = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 border border-gray-100 hover:border-primary-200 hover:shadow-2xl group"
+                className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-lg overflow-hidden transition-all duration-300 border border-white/60 hover:border-primary-200 hover:shadow-2xl group"
               >
                 {/* Product Image Placeholder */}
-                <div className="h-48 sm:h-56 md:h-64 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-300">
+                <div className="h-48 sm:h-56 md:h-64 bg-gradient-to-br from-gray-200 to-gray-100 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-300">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="grid grid-cols-2 gap-2">
                       {product.colors.map((color, i) => (
@@ -196,6 +227,27 @@ const Products = () => {
                   </button>
                 </div>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Service Strip */}
+      <section className="py-16 bg-slate-900 text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-10">
+            <div>
+              <p className="text-xs uppercase tracking-[0.4em] text-accent mb-3">Design lab</p>
+              <h2 className="text-3xl font-display font-semibold">Concierge services for architects & collectors</h2>
+            </div>
+            <button className="bg-white text-slate-900 px-6 py-3 rounded-xl font-semibold">Share your brief</button>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {services.map((service) => (
+              <div key={service.title} className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-xl">
+                <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
+                <p className="text-sm text-white/80">{service.description}</p>
+              </div>
             ))}
           </div>
         </div>

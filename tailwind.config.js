@@ -19,6 +19,7 @@ export default {
           800: '#075985',
           900: '#0c4a6e',
         },
+        accent: '#E7B872',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
