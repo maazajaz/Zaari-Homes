@@ -50,9 +50,15 @@ const Contact = () => {
       formDataToSend.append('name', formData.name);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone || '');
-      formDataToSend.append('subject', formData.subject);
+      formDataToSend.append('subject', `Zaari Homes - ${formData.subject}`);
       formDataToSend.append('message', formData.message);
-      formDataToSend.append('to', 'maazajaz000@gmail.com'); // Testing email
+      formDataToSend.append('from_name', 'Zaari Homes Contact Form');
+      formDataToSend.append('replyto', formData.email);
+      formDataToSend.append('to', 'zaarihomes@gmail.com');
+      
+      // Anti-spam measures
+      formDataToSend.append('botcheck', '');
+      formDataToSend.append('redirect', 'https://www.zaarihomes.com/contact');
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
