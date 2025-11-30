@@ -30,6 +30,7 @@ export default async function handler(req, res) {
     
     // Debug logging
     console.log('Environment variable present:', !!web3formsKey);
+    console.log('Access key format:', web3formsKey ? `${web3formsKey.substring(0, 8)}...` : 'none');
     
     if (!web3formsKey) {
       console.error('WEB3FORMS_ACCESS_KEY not found in environment variables');
@@ -40,26 +41,25 @@ export default async function handler(req, res) {
     }
 
     // Send email via Web3Forms
-    const formData = new URLSearchParams();
+    const formData = new FormData();
     formData.append('access_key', web3formsKey);
     formData.append('name', name);
     formData.append('email', email);
-    formData.append('phone', phone || 'Not provided');
-    formData.append('subject', `Zaari Homes Contact: ${subject}`);
+    formData.append('phone', phone || '');
+    formData.append('subject', subject);
     formData.append('message', message);
     
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData.toString()
+      body: formData
     });
 
     // Check if response is ok
     if (!response.ok) {
+      const errorText = await response.text();
       console.error('Web3Forms response not OK:', response.status, response.statusText);
-      throw new Error(`Web3Forms API returned status ${response.status}`);
+      console.error('Response body:', errorText);
+      throw new Error(`Web3Forms API returned status ${response.status}: ${errorText}`);
     }
 
     // Get response text first
