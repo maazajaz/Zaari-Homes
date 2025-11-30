@@ -87,7 +87,7 @@ ${formData.message}
 
       // Send directly to Web3Forms from browser (bypasses Cloudflare bot protection)
       const formDataToSend = new FormData();
-      formDataToSend.append('access_key', '0bf182e6-b3da-4f12-ab38-da3b97ec420b');
+      formDataToSend.append('access_key', '12667a1e-543c-4b79-ab6a-fa28336591d7');
       formDataToSend.append('name', formData.name);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone || '');
