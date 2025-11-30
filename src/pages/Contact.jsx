@@ -44,6 +44,47 @@ const Contact = () => {
     setFormStatus({ loading: true, success: false, error: null });
 
     try {
+      // Collect user metadata
+      const userMetadata = {
+        timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        browser: navigator.userAgent,
+        language: navigator.language,
+        screenResolution: `${window.screen.width}x${window.screen.height}`,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        platform: navigator.platform,
+        deviceMemory: navigator.deviceMemory || 'N/A',
+        referrer: document.referrer || 'Direct',
+        pageUrl: window.location.href
+      };
+
+      // Try to get approximate location (requires user permission)
+      let locationInfo = 'Location not available';
+      try {
+        const ipResponse = await fetch('https://ipapi.co/json/');
+        const ipData = await ipResponse.json();
+        locationInfo = `${ipData.city || ''}, ${ipData.region || ''}, ${ipData.country_name || ''} (${ipData.ip || ''})`;
+      } catch (err) {
+        console.log('Could not fetch location');
+      }
+
+      // Build enhanced message
+      const enhancedMessage = `
+${formData.message}
+
+─────────────────────────
+📊 SUBMISSION DETAILS
+─────────────────────────
+📍 Location: ${locationInfo}
+🕐 Time: ${userMetadata.timestamp}
+🌍 Timezone: ${userMetadata.timezone}
+💻 Device: ${userMetadata.platform}
+🌐 Browser: ${userMetadata.browser}
+🗣️ Language: ${userMetadata.language}
+📱 Screen: ${userMetadata.screenResolution}
+🔗 Page: ${userMetadata.pageUrl}
+↩️ Referrer: ${userMetadata.referrer}
+      `.trim();
+
       // Send directly to Web3Forms from browser (bypasses Cloudflare bot protection)
       const formDataToSend = new FormData();
       formDataToSend.append('access_key', '0bf182e6-b3da-4f12-ab38-da3b97ec420b');
@@ -51,7 +92,7 @@ const Contact = () => {
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone || '');
       formDataToSend.append('subject', `Zaari Homes - ${formData.subject}`);
-      formDataToSend.append('message', formData.message);
+      formDataToSend.append('message', enhancedMessage);
       formDataToSend.append('from_name', 'Zaari Homes Contact Form');
       formDataToSend.append('replyto', formData.email);
       formDataToSend.append('to', 'zaarihomes@gmail.com');
