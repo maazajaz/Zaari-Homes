@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Contact = () => {
@@ -10,19 +10,68 @@ const Contact = () => {
     message: ''
   });
 
+  const [formStatus, setFormStatus] = useState({
+    loading: false,
+    success: false,
+    error: null
+  });
+
+  // Scroll to contact form if hash is present
+  useEffect(() => {
+    if (window.location.hash === '#contact-form') {
+      setTimeout(() => {
+        const element = document.getElementById('contact-form');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Clear error when user starts typing
+    if (formStatus.error) {
+      setFormStatus({ ...formStatus, error: null });
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setFormStatus({ loading: true, success: false, error: null });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setFormStatus({ loading: false, success: true, error: null });
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+        
+        // Show success message for 5 seconds
+        setTimeout(() => {
+          setFormStatus({ loading: false, success: false, error: null });
+        }, 5000);
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (error) {
+      setFormStatus({ 
+        loading: false, 
+        success: false, 
+        error: error.message || 'Something went wrong. Please try again or email us directly at zaarihomes@gmail.com' 
+      });
+    }
   };
 
   const contactInfo = [
@@ -115,7 +164,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-16">
+      <section id="contact-form" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Form */}
@@ -126,6 +175,33 @@ const Contact = () => {
               className="bg-white rounded-xl shadow-lg p-8"
             >
               <h2 className="text-3xl font-display font-bold mb-6">Send Us a Message</h2>
+              
+              {/* Success Message */}
+              {formStatus.success && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
+                  <svg className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <h3 className="font-semibold text-green-800">Message Sent Successfully!</h3>
+                    <p className="text-sm text-green-700">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {formStatus.error && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                  <svg className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <h3 className="font-semibold text-red-800">Error Sending Message</h3>
+                    <p className="text-sm text-red-700">{formStatus.error}</p>
+                  </div>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -166,6 +242,7 @@ const Contact = () => {
                   <input
                     type="tel"
                     id="phone"
+                    name="phone"
                     required
                     value={formData.phone}
                     onChange={handleChange}
@@ -208,9 +285,27 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white py-3 sm:py-4 rounded-xl font-semibold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm sm:text-base"
+                  disabled={formStatus.loading}
+                  className={`w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white py-3 sm:py-4 rounded-xl font-semibold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm sm:text-base flex items-center justify-center gap-2 ${
+                    formStatus.loading ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
                 >
-                  Send Message
+                  {formStatus.loading ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </form>
             </motion.div>
@@ -246,9 +341,12 @@ const Contact = () => {
                   Visit our showroom to see our collection in person and meet with 
                   our design consultants for personalized advice.
                 </p>
-                <button className="w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-shadow duration-300">
+                <a 
+                  href="#contact-form" 
+                  className="block w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-shadow duration-300 text-center"
+                >
                   Book Appointment
-                </button>
+                </a>
               </div>
 
               <div className="bg-white rounded-xl shadow-lg p-8">

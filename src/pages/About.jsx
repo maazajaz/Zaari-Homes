@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const About = () => {
@@ -217,9 +218,9 @@ const About = () => {
             <p className="text-xl mb-8 opacity-90">
               Our skilled team of craftspeople bring decades of experience to every piece
             </p>
-            <button className="bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-shadow duration-300">
+            <Link to="/contact#contact-form" className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-shadow duration-300">
               Visit Our Workshop
-            </button>
+            </Link>
           </motion.div>
         </div>
       </section>

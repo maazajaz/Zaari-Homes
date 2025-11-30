@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CarpetScene from '../components/CarpetScene';
 
@@ -240,7 +241,7 @@ const Products = () => {
               <p className="text-xs uppercase tracking-[0.4em] text-accent mb-3">Design lab</p>
               <h2 className="text-3xl font-display font-semibold">Concierge services for architects & collectors</h2>
             </div>
-            <button className="bg-white text-slate-900 px-6 py-3 rounded-xl font-semibold">Share your brief</button>
+            <Link to="/contact#contact-form" className="bg-white text-slate-900 px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-shadow">Share your brief</Link>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {services.map((service) => (
@@ -267,9 +268,9 @@ const Products = () => {
             <p className="text-xl mb-8 opacity-90">
               We offer custom designs tailored to your exact specifications
             </p>
-            <button className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-shadow duration-300">
+            <Link to="/contact#contact-form" className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-shadow duration-300">
               Request Custom Design
-            </button>
+            </Link>
           </motion.div>
         </div>
       </section>

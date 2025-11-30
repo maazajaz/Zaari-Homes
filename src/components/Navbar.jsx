@@ -38,9 +38,12 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <button className="px-6 py-2 rounded-xl bg-white/90 text-[#050E1F] border border-white/40 shadow-lg shadow-[#050E1F]/30 backdrop-blur hover:-translate-y-0.5 transition-all duration-200">
+            <Link 
+              to="/contact#contact-form" 
+              className="px-6 py-2 rounded-xl bg-white/90 text-[#050E1F] border border-white/40 shadow-lg shadow-[#050E1F]/30 backdrop-blur hover:-translate-y-0.5 transition-all duration-200"
+            >
               Get Quote
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -87,9 +90,13 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <button className="w-full text-left px-3 py-2 bg-white/90 text-[#050E1F] rounded-md border border-white/40">
+            <Link 
+              to="/contact#contact-form" 
+              className="w-full text-left px-3 py-2 bg-white/90 text-[#050E1F] rounded-md border border-white/40"
+              onClick={() => setIsOpen(false)}
+            >
               Get Quote
-            </button>
+            </Link>
           </div>
         </motion.div>
       )}

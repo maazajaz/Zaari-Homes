@@ -156,7 +156,7 @@ const Home = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </Link>
-                <Link to="/contact" className="px-8 py-4 rounded-xl border border-white/30 text-white/90 hover:text-white hover:border-white transition">
+                <Link to="/contact#contact-form" className="px-8 py-4 rounded-xl border border-white/30 text-white/90 hover:text-white hover:border-white transition">
                   Book a Design Call
                 </Link>
               </div>
@@ -306,7 +306,7 @@ const Home = () => {
         <div className="relative max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-display font-bold mb-4">Ready to transform your floor plan into a gallery?</h2>
           <p className="text-lg text-white/80 mb-10">Schedule a design discovery call and receive a complimentary digital mockup tailored to your interior palette.</p>
-          <Link to="/contact" className="inline-flex items-center gap-3 bg-white text-primary-700 px-8 py-4 rounded-2xl font-semibold shadow-2xl">
+          <Link to="/contact#contact-form" className="inline-flex items-center gap-3 bg-white text-primary-700 px-8 py-4 rounded-2xl font-semibold shadow-2xl">
             Book Consultation
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
