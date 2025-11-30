@@ -40,22 +40,20 @@ export default async function handler(req, res) {
     }
 
     // Send email via Web3Forms
+    const formData = new URLSearchParams();
+    formData.append('access_key', web3formsKey);
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone || 'Not provided');
+    formData.append('subject', `Zaari Homes Contact: ${subject}`);
+    formData.append('message', message);
+    
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
-        access_key: web3formsKey,
-        name: name,
-        email: email,
-        phone: phone || 'Not provided',
-        subject: `Zaari Homes Contact: ${subject}`,
-        message: message,
-        from_name: 'Zaari Homes Website',
-        replyto: email,
-      })
+      body: formData.toString()
     });
 
     // Check if response is ok
