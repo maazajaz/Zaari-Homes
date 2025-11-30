@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import CarpetScene from '../components/CarpetScene';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -129,7 +128,20 @@ const Products = () => {
               Interactive 3D Preview
             </h2>
             <div className="h-[320px] sm:h-[420px] md:h-[520px] rounded-2xl overflow-hidden border border-white/60">
-              <CarpetScene autoRotate={false} />
+              <iframe 
+                title="Bed Room 01 - Baked" 
+                frameBorder="0" 
+                allowFullScreen 
+                mozallowfullscreen="true" 
+                webkitallowfullscreen="true" 
+                allow="autoplay; fullscreen; xr-spatial-tracking" 
+                xr-spatial-tracking="true"
+                execution-while-out-of-viewport="true"
+                execution-while-not-rendered="true"
+                web-share="true"
+                src="https://sketchfab.com/models/08d36d567bdc4532965f881a3c3d8795/embed?autostart=1&ui_theme=dark"
+                className="w-full h-full"
+              />
             </div>
             <p className="text-center text-gray-600 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base">
               <span className="hidden sm:inline">Drag to rotate • Scroll to zoom • Click and drag to explore</span>

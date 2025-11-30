@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import CarpetScene from '../components/CarpetScene';
 
 const features = [
   {
@@ -86,9 +85,20 @@ const HeroPreview = ({ showScene }) => (
       <div className="absolute -inset-1 bg-gradient-to-r from-accent via-primary-300 to-blue-400 rounded-[32px] blur-2xl opacity-70"></div>
       <div className="relative rounded-[32px] bg-white/5 border border-white/15 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_rgba(5,14,31,0.6)]">
         <div className="h-[420px] sm:h-[520px] lg:h-[620px]">
-          {showScene ? <CarpetScene autoRotate={true} /> : (
-            <div className="h-full flex items-center justify-center text-white/70">Loading immersive preview…</div>
-          )}
+          <iframe 
+            title="Bed Room 01 - Baked" 
+            frameBorder="0" 
+            allowFullScreen 
+            mozallowfullscreen="true" 
+            webkitallowfullscreen="true" 
+            allow="autoplay; fullscreen; xr-spatial-tracking" 
+            xr-spatial-tracking="true"
+            execution-while-out-of-viewport="true"
+            execution-while-not-rendered="true"
+            web-share="true"
+            src="https://sketchfab.com/models/08d36d567bdc4532965f881a3c3d8795/embed?autostart=1&ui_theme=dark"
+            className="w-full h-full"
+          />
         </div>
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/70 text-white text-xs sm:text-sm px-4 py-2 rounded-full border border-white/20 backdrop-blur">
           Drag to rotate · Scroll to zoom
@@ -100,10 +110,10 @@ const HeroPreview = ({ showScene }) => (
       <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Artisan Note</p>
       <div className="flex flex-wrap items-center gap-4">
         <div>
-          <p className="font-semibold">Lotus Wave Suite</p>
-          <p className="text-sm text-slate-600">Hand tufted · 240 knots · Sage patina</p>
+          <p className="font-semibold">Luxury Bedroom Collection</p>
+          <p className="text-sm text-slate-600">Premium carpets · Modern design · Elegant finish</p>
         </div>
-        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">Showroom Exclusive</span>
+        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">Featured Design</span>
       </div>
     </div>
   </>
