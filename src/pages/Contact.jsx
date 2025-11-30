@@ -97,6 +97,9 @@ ${formData.message}
       formDataToSend.append('replyto', formData.email);
       formDataToSend.append('to', 'zaarihomes@gmail.com');
       
+      // Auto-reply to user
+      formDataToSend.append('autoresponse', 'Thank you for contacting Zaari Homes! We have received your inquiry and will get back to you as soon as possible. Our team typically responds within 24 hours. In the meantime, feel free to explore our exquisite collection of handcrafted carpets at www.zaarihomes.com');
+      
       // Anti-spam measures
       formDataToSend.append('botcheck', '');
       formDataToSend.append('redirect', 'https://www.zaarihomes.com/contact');
