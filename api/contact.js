@@ -97,24 +97,25 @@ Submitted at: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
       `
     };
 
-    // Use Web3Forms (free service) or Resend API
-    // Option 1: Web3Forms (recommended for simplicity)
+    // Use Web3Forms (free service)
     const web3formsKey = process.env.WEB3FORMS_ACCESS_KEY;
     
     if (web3formsKey) {
-      const formData = new FormData();
-      formData.append('access_key', web3formsKey);
-      formData.append('name', name);
-      formData.append('email', email);
-      formData.append('phone', phone || '');
-      formData.append('subject', subject);
-      formData.append('message', message);
-      formData.append('from_name', 'Zaari Homes Contact Form');
-      formData.append('replyto', email);
-
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: web3formsKey,
+          name: name,
+          email: email,
+          phone: phone || 'Not provided',
+          subject: `Zaari Homes Contact: ${subject}`,
+          message: message,
+          from_name: 'Zaari Homes Website',
+          replyto: email,
+        })
       });
 
       const data = await response.json();
@@ -122,10 +123,10 @@ Submitted at: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
       if (data.success) {
         return res.status(200).json({ 
           success: true, 
-          message: 'Thank you! Your message has been sent successfully.' 
+          message: 'Thank you! Your message has been sent successfully. We will contact you within 24 hours.' 
         });
       } else {
-        throw new Error('Failed to send email via Web3Forms');
+        throw new Error(data.message || 'Failed to send email via Web3Forms');
       }
     }
 
