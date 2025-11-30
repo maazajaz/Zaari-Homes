@@ -52,6 +52,7 @@ const Contact = () => {
       formDataToSend.append('phone', formData.phone || '');
       formDataToSend.append('subject', formData.subject);
       formDataToSend.append('message', formData.message);
+      formDataToSend.append('to', 'maazajaz000@gmail.com'); // Testing email
 
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
