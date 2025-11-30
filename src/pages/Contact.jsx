@@ -44,12 +44,18 @@ const Contact = () => {
     setFormStatus({ loading: true, success: false, error: null });
 
     try {
-      const response = await fetch('/api/contact', {
+      // Send directly to Web3Forms from browser (bypasses Cloudflare bot protection)
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', '0bf182e6-b3da-4f12-ab38-da3b97ec420b');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone || '');
+      formDataToSend.append('subject', formData.subject);
+      formDataToSend.append('message', formData.message);
+
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend
       });
 
       const data = await response.json();
