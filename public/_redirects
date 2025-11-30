@@ -1,0 +1,7 @@
+# Netlify redirects for SPA and HTTPS enforcement
+# Force HTTPS
+http://zaarihomes.com/* https://www.zaarihomes.com/:splat 301!
+http://www.zaarihomes.com/* https://www.zaarihomes.com/:splat 301!
+
+# SPA fallback
+/*    /index.html   200
