@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import BedroomScene from '../components/BedroomScene';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [customTextureUrl, setCustomTextureUrl] = useState(null);
 
   const categories = [
     { id: 'all', name: 'All Carpets' },
@@ -85,8 +87,8 @@ const Products = () => {
     }
   ];
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
+  const filteredProducts = selectedCategory === 'all'
+    ? products
     : products.filter(p => p.category === selectedCategory);
 
   return (
@@ -96,7 +98,7 @@ const Products = () => {
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
         <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
       </div>
-      
+
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-slate-900 via-primary-700 to-blue-600 text-white py-12 sm:py-16 md:py-20 relative z-10 overflow-hidden">
         <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 10% 10%, rgba(255,255,255,0.3) 0%, transparent 45%)' }}></div>
@@ -127,21 +129,40 @@ const Products = () => {
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-center mb-4 sm:mb-6">
               Interactive 3D Preview
             </h2>
-            <div className="h-[320px] sm:h-[420px] md:h-[520px] rounded-2xl overflow-hidden border border-white/60">
-              <iframe 
-                title="Bed Room 01 - Baked" 
-                frameBorder="0" 
-                allowFullScreen 
-                mozallowfullscreen="true" 
-                webkitallowfullscreen="true" 
-                allow="autoplay; fullscreen; xr-spatial-tracking" 
-                xr-spatial-tracking="true"
-                execution-while-out-of-viewport="true"
-                execution-while-not-rendered="true"
-                web-share="true"
-                src="https://sketchfab.com/models/08d36d567bdc4532965f881a3c3d8795/embed?autostart=1&ui_theme=dark"
-                className="w-full h-full"
-              />
+            <div className="h-[320px] sm:h-[420px] md:h-[520px] rounded-2xl overflow-hidden border border-white/60 relative w-full">
+              <div className="absolute inset-0 w-full h-full">
+                <BedroomScene autoRotate={false} customTextureUrl={customTextureUrl} />
+              </div>
+
+              {/* Custom Texture Upload UI */}
+              <div className="absolute top-4 right-4 z-10">
+                <label className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-lg cursor-pointer transition-all flex items-center gap-2 group shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <span className="text-xs font-medium">Upload</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const url = URL.createObjectURL(file);
+                        setCustomTextureUrl(url);
+                      }
+                    }}
+                  />
+                </label>
+                {customTextureUrl && (
+                  <button
+                    onClick={() => setCustomTextureUrl(null)}
+                    className="mt-2 text-[10px] text-white/50 hover:text-white bg-black/30 px-2 py-1 rounded w-full backdrop-blur-sm"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
             </div>
             <p className="text-center text-gray-600 mt-3 sm:mt-4 text-xs sm:text-sm md:text-base">
               <span className="hidden sm:inline">Drag to rotate • Scroll to zoom • Click and drag to explore</span>
@@ -173,11 +194,10 @@ const Products = () => {
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg font-semibold transition-all duration-300 text-sm sm:text-base ${
-                  selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-primary-600 to-blue-600 text-white shadow-lg'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+                className={`px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg font-semibold transition-all duration-300 text-sm sm:text-base ${selectedCategory === category.id
+                  ? 'bg-gradient-to-r from-primary-600 to-blue-600 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
               >
                 {category.name}
               </button>
