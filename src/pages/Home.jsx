@@ -80,30 +80,27 @@ const testimonials = [
   }
 ];
 
-const HeroPreview = ({ showScene, customTextureUrl, setCustomTextureUrl }) => (
+const HeroPreview = ({ customTextureUrl, setCustomTextureUrl }) => (
   <>
     <div className="relative">
-      <div className="absolute -inset-1 bg-gradient-to-r from-accent via-primary-300 to-blue-400 rounded-[32px] blur-2xl opacity-70"></div>
-      <div className="relative rounded-[32px] bg-white/5 border border-white/15 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_rgba(5,14,31,0.6)]">
+      {/* Carpet Theme Glow */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-purple-500/10 to-blue-500/20 rounded-[32px] blur-2xl opacity-50"></div>
+
+      {/* Container - Carpet Theme Background */}
+      <div className="relative rounded-[32px] bg-[#0a0f1c] border border-white/10 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.8)]">
         <div className="h-[420px] sm:h-[520px] lg:h-[620px] relative w-full">
-          {showScene ? (
-            <div className="absolute inset-0 w-full h-full">
-              <BedroomScene autoRotate={false} customTextureUrl={customTextureUrl} />
-            </div>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-white/50">
-              Loading Model...
-            </div>
-          )}
+          <div className="absolute inset-0 w-full h-full">
+            <BedroomScene autoRotate={false} customTextureUrl={customTextureUrl} />
+          </div>
         </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/70 text-white text-xs sm:text-sm px-4 py-2 rounded-full border border-white/20 backdrop-blur pointer-events-none">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/40 text-white/80 text-xs sm:text-sm px-4 py-2 rounded-full border border-white/10 backdrop-blur pointer-events-none">
           Drag to rotate · Scroll to zoom
         </div>
 
         {/* Custom Texture Upload UI */}
         <div className="absolute top-4 right-4 z-10">
-          <label className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-lg cursor-pointer transition-all flex items-center gap-2 group">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <label className="bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/10 text-white px-4 py-2 rounded-lg cursor-pointer transition-all flex items-center gap-2 group">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:scale-110 transition-transform text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             <span className="text-sm font-medium">Upload Design</span>
@@ -146,13 +143,7 @@ const HeroPreview = ({ showScene, customTextureUrl, setCustomTextureUrl }) => (
 );
 
 const Home = () => {
-  const [showScene, setShowScene] = useState(false);
   const [customTextureUrl, setCustomTextureUrl] = useState(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowScene(true), 1100);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="overflow-x-hidden bg-white">
@@ -180,9 +171,9 @@ const Home = () => {
                 </p>
               </div>
 
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="block lg:hidden">
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="block lg:hidden">
                 <div className="mt-8">
-                  <HeroPreview showScene={showScene} customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} />
+                  <HeroPreview customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} />
                 </div>
               </motion.div>
 
@@ -208,8 +199,8 @@ const Home = () => {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="hidden lg:block order-2 w-full">
-              <HeroPreview showScene={showScene} customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="hidden lg:block order-2 w-full">
+              <HeroPreview customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} />
             </motion.div>
           </div>
 
