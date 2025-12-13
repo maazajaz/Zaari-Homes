@@ -3,6 +3,18 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import BedroomScene from '../components/BedroomScene';
 
+// Carpet preset images
+import carpetPreset1 from '../assets/carpet_preset/ChatGPT Image Dec 13, 2025, 04_27_31 PM.png';
+import carpetPreset2 from '../assets/carpet_preset/ChatGPT Image Dec 13, 2025, 04_43_19 PM.png';
+import carpetPreset3 from '../assets/carpet_preset/WhatsApp Image 2025-11-30 at 1.55.44 PM.png';
+import carpetPreset4 from '../assets/carpet_preset/carpet 3.jpeg';
+
+const carpetPresets = [
+  { id: 1, name: 'Royal Persian', image: carpetPreset1 },
+  { id: 2, name: 'Modern Floral', image: carpetPreset2 },
+  { id: 3, name: 'Classic Ornate', image: carpetPreset3 },
+  { id: 4, name: 'Traditional', image: carpetPreset4 },
+];
 const features = [
   {
     icon: '💎',
@@ -80,70 +92,137 @@ const testimonials = [
   }
 ];
 
-const HeroPreview = ({ customTextureUrl, setCustomTextureUrl }) => (
-  <>
-    <div className="relative">
-      {/* Carpet Theme Glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-purple-500/10 to-blue-500/20 rounded-[32px] blur-2xl opacity-50"></div>
+const HeroPreview = ({ customTextureUrl, setCustomTextureUrl, selectedPresetId, onPresetSelect }) => {
+  // Reusable Design Selector Content
+  const DesignSelectorContent = ({ isMobile = false }) => (
+    <div className={`bg-black/60 backdrop-blur-md rounded-xl border border-white/10 ${isMobile ? 'p-3' : 'p-3'}`}>
+      <p className={`text-white/60 uppercase tracking-wider mb-2 ${isMobile ? 'text-[10px] text-center' : 'text-[10px]'}`}>Choose Design</p>
 
-      {/* Container - Carpet Theme Background */}
-      <div className="relative rounded-[32px] bg-[#0a0f1c] border border-white/10 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.8)]">
-        <div className="h-[420px] sm:h-[520px] lg:h-[620px] relative w-full">
-          <div className="absolute inset-0 w-full h-full">
-            <BedroomScene autoRotate={false} customTextureUrl={customTextureUrl} />
+      {/* Preset Thumbnails */}
+      <div className={`flex gap-2 mb-3 ${isMobile ? 'justify-center' : ''}`}>
+        {carpetPresets.map((preset) => (
+          <button
+            key={preset.id}
+            onClick={() => {
+              onPresetSelect(preset.id);
+              setCustomTextureUrl(preset.image);
+            }}
+            className={`relative group rounded-lg overflow-hidden transition-all duration-200 ${selectedPresetId === preset.id
+              ? 'ring-2 ring-amber-500 scale-105'
+              : 'hover:ring-2 hover:ring-white/50 hover:scale-105'
+              }`}
+            title={preset.name}
+          >
+            <img
+              src={preset.image}
+              alt={preset.name}
+              className={`${isMobile ? 'w-12 h-12' : 'w-11 h-11'} object-cover ${selectedPresetId === preset.id ? 'brightness-75' : ''}`}
+            />
+            {selectedPresetId === preset.id && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Divider */}
+      <div className="flex items-center gap-2 mb-3">
+        <div className="flex-1 h-px bg-white/20"></div>
+        <span className="text-white/40 text-[9px] uppercase">or</span>
+        <div className="flex-1 h-px bg-white/20"></div>
+      </div>
+
+      {/* Upload Custom */}
+      <label className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3 py-2 rounded-lg cursor-pointer transition-all flex items-center justify-center gap-2 group w-full">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:scale-110 transition-transform text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        </svg>
+        <span className="text-xs font-medium">Upload Your Design</span>
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const url = URL.createObjectURL(file);
+              setCustomTextureUrl(url);
+              onPresetSelect(null);
+            }
+          }}
+        />
+      </label>
+
+      {/* Custom Upload Indicator & Reset */}
+      {customTextureUrl && !selectedPresetId && (
+        <div className="mt-2 flex items-center justify-between gap-2 bg-amber-500/20 rounded-lg px-2 py-1.5">
+          <span className="text-[10px] text-amber-400 flex items-center gap-1">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            Custom Applied
+          </span>
+          <button
+            onClick={() => setCustomTextureUrl(null)}
+            className="text-[10px] text-white/60 hover:text-white transition"
+          >
+            Reset
+          </button>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      <div className="relative">
+        {/* Carpet Theme Glow */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-purple-500/10 to-blue-500/20 rounded-[32px] blur-2xl opacity-50"></div>
+
+        {/* Container - Carpet Theme Background */}
+        <div className="relative rounded-[32px] bg-[#0a0f1c] border border-white/10 backdrop-blur-xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.8)]">
+          <div className="h-[350px] sm:h-[520px] lg:h-[620px] relative w-full">
+            <div className="absolute inset-0 w-full h-full">
+              <BedroomScene autoRotate={false} customTextureUrl={customTextureUrl} />
+            </div>
+          </div>
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-black/40 text-white/80 text-[10px] sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/10 backdrop-blur pointer-events-none">
+            Drag to rotate · Scroll to zoom
+          </div>
+
+          {/* Design Selector - DESKTOP ONLY (inside canvas, absolute positioned) */}
+          <div className="hidden sm:block absolute top-4 right-4 z-10">
+            <DesignSelectorContent />
           </div>
         </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/40 text-white/80 text-xs sm:text-sm px-4 py-2 rounded-full border border-white/10 backdrop-blur pointer-events-none">
-          Drag to rotate · Scroll to zoom
-        </div>
+      </div>
 
-        {/* Custom Texture Upload UI */}
-        <div className="absolute top-4 right-4 z-10">
-          <label className="bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/10 text-white px-4 py-2 rounded-lg cursor-pointer transition-all flex items-center gap-2 group">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:scale-110 transition-transform text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-            </svg>
-            <span className="text-sm font-medium">Upload Design</span>
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                  const url = URL.createObjectURL(file);
-                  setCustomTextureUrl(url);
-                }
-              }}
-            />
-          </label>
-          {customTextureUrl && (
-            <button
-              onClick={() => setCustomTextureUrl(null)}
-              className="mt-2 text-xs text-white/50 hover:text-white bg-black/30 px-2 py-1 rounded w-full backdrop-blur-sm"
-            >
-              Reset Default
-            </button>
-          )}
+      {/* Design Selector - MOBILE ONLY (outside canvas, below it) */}
+      <div className="sm:hidden mt-3">
+        <DesignSelectorContent isMobile={true} />
+      </div>
+
+      <div className="hidden sm:flex flex-col gap-1 w-full mt-6 bg-white/90 text-slate-900 px-6 py-4 rounded-2xl shadow-lg border border-white/60">
+        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Artisan Note</p>
+        <div className="flex flex-wrap items-center gap-4">
+          <div>
+            <p className="font-semibold">Luxury Bedroom Collection</p>
+            <p className="text-sm text-slate-600">Premium carpets · Modern design · Elegant finish</p>
+          </div>
+          <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">Featured Design</span>
         </div>
       </div>
-    </div>
-
-    <div className="hidden sm:flex flex-col gap-1 w-full mt-6 bg-white/90 text-slate-900 px-6 py-4 rounded-2xl shadow-lg border border-white/60">
-      <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Artisan Note</p>
-      <div className="flex flex-wrap items-center gap-4">
-        <div>
-          <p className="font-semibold">Luxury Bedroom Collection</p>
-          <p className="text-sm text-slate-600">Premium carpets · Modern design · Elegant finish</p>
-        </div>
-        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">Featured Design</span>
-      </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 const Home = () => {
   const [customTextureUrl, setCustomTextureUrl] = useState(null);
+  const [selectedPresetId, setSelectedPresetId] = useState(null);
 
   return (
     <div className="overflow-x-hidden bg-white">
@@ -173,7 +252,7 @@ const Home = () => {
 
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="block lg:hidden">
                 <div className="mt-8">
-                  <HeroPreview customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} />
+                  <HeroPreview customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} selectedPresetId={selectedPresetId} onPresetSelect={setSelectedPresetId} />
                 </div>
               </motion.div>
 
@@ -200,7 +279,7 @@ const Home = () => {
             </motion.div>
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="hidden lg:block order-2 w-full">
-              <HeroPreview customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} />
+              <HeroPreview customTextureUrl={customTextureUrl} setCustomTextureUrl={setCustomTextureUrl} selectedPresetId={selectedPresetId} onPresetSelect={setSelectedPresetId} />
             </motion.div>
           </div>
 

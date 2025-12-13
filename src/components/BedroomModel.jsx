@@ -32,6 +32,25 @@ const BedroomModel = ({ customTextureUrl, ...props }) => {
                 if (!originalMaterialRef.current) {
                     originalMaterialRef.current = child.material.clone();
                 }
+
+                // DEBUG: Calculate and log carpet bounding box in world coordinates
+                child.geometry.computeBoundingBox();
+                const bbox = child.geometry.boundingBox.clone();
+
+                // Apply the mesh's world transform to get world coordinates
+                child.updateMatrixWorld(true);
+                bbox.applyMatrix4(child.matrixWorld);
+
+                console.log('=== CARPET MESH DEBUG ===');
+                console.log('Carpet name:', child.name);
+                console.log('Carpet world position:', child.getWorldPosition(new THREE.Vector3()));
+                console.log('Carpet bounding box (world coords):');
+                console.log('  Min (back-left corner):', bbox.min);
+                console.log('  Max (front-right corner):', bbox.max);
+                console.log('  Width (X):', bbox.max.x - bbox.min.x);
+                console.log('  Depth (Z):', bbox.max.z - bbox.min.z);
+                console.log('  Center:', new THREE.Vector3().addVectors(bbox.min, bbox.max).multiplyScalar(0.5));
+                console.log('=========================');
             }
         });
 
