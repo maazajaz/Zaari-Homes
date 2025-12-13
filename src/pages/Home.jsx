@@ -2,6 +2,11 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import BedroomScene from '../components/BedroomScene';
+import { useGLTF } from '@react-three/drei';
+import bedroomModel from '../assets/latest_bedroom_compressed.glb?url';
+
+// Preload the 3D model as early as possible
+useGLTF.preload(bedroomModel);
 
 // Carpet preset images
 import carpetPreset1 from '../assets/carpet_preset/ChatGPT Image Dec 13, 2025, 04_27_31 PM.png';

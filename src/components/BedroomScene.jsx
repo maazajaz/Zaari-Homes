@@ -18,7 +18,7 @@ const BedroomScene = ({ autoRotate = false, customTextureUrl, showAnnotations = 
     }, []);
 
     // Closer camera for mobile (more zoomed in)
-    const cameraPosition = isMobile ? [2, 0, 3.] : [0, 1.3, 3.8];
+    const cameraPosition = isMobile ? [2, 0, 3.6] : [0, 1.3, 4];
 
     return (
         <div className="relative w-full h-full">
@@ -63,15 +63,15 @@ const BedroomScene = ({ autoRotate = false, customTextureUrl, showAnnotations = 
                     autoRotateSpeed={0.5}
                     enableZoom={true}
                     enablePan={false}
-                    // Polar angle (up/down) limits
-                    minPolarAngle={isMobile ? Math.PI / 2.8 : 0}  // Mobile: ~64 degrees from top (balanced)
-                    maxPolarAngle={isMobile ? Math.PI / 2.2 : Math.PI / 2}  // Mobile: slightly above horizontal
-                    // Azimuth angle (left/right) limits - only on mobile
-                    minAzimuthAngle={isMobile ? -Math.PI / 4 : -Infinity}  // -45 degrees (stricter)
-                    maxAzimuthAngle={isMobile ? Math.PI / 4 : Infinity}    // +45 degrees (stricter)
-                    // Zoom limits - current view is max zoom out, can zoom in
-                    minDistance={isMobile ? 2 : 2}      // Can zoom in close
-                    maxDistance={isMobile ? 3.6 : 8}    // Current view is max (can't zoom out more)
+                    // Polar angle (up/down) limits - same for both
+                    minPolarAngle={Math.PI / 2.8}  // ~64 degrees from top
+                    maxPolarAngle={Math.PI / 2.2}  // Slightly above horizontal
+                    // Azimuth angle (left/right) limits - same for both
+                    minAzimuthAngle={-Math.PI / 4}  // -45 degrees
+                    maxAzimuthAngle={Math.PI / 4}   // +45 degrees
+                    // Zoom limits
+                    minDistance={2}      // Can zoom in close
+                    maxDistance={3.6}    // Current view is max (can't zoom out more)
                 />
             </Canvas>
         </div>

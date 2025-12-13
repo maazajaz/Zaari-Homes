@@ -6,6 +6,11 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import { useGLTF } from '@react-three/drei';
+import bedroomModel from './assets/latest_bedroom_compressed.glb?url';
+
+// Preload the 3D model as early as possible (at app init)
+useGLTF.preload(bedroomModel);
 
 // Scroll to top component
 function ScrollToTop() {

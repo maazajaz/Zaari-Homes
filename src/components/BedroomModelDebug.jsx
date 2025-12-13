@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import bedroomModel from '../assets/latest_bedroom.glb?url';
+import bedroomModel from '../assets/latest_bedroom_compressed.glb?url';
 
 // Debug component to visualize carpet corners
 const CarpetDebugMarkers = ({ bounds }) => {
@@ -105,5 +105,8 @@ const BedroomModelDebug = ({ customTextureUrl, showDebug = true, onCarpetBounds,
         </group>
     );
 };
+
+// Preload the model for faster initial render
+useGLTF.preload(bedroomModel);
 
 export default BedroomModelDebug;
